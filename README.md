@@ -16,3 +16,6 @@
 ### Ornament & Crime DIY
  * https://github.com/jakplugg/uO_c
  * https://drive.google.com/file/d/0ByUu4ePJDmVnS3U1OUNiQ05heG8/view
+### Parts
+ * LM13700
+   * https://www.uk-electronic.de/onlineshop/product_info.php?products_id=707
