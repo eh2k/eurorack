@@ -1,7 +1,8 @@
 # eurorack
 
 ## General:
- * http://www.doepfer.de/home_d.htm
+ * http://www.doepfer.de/DIY/a100_diy.htm
+ * https://northcoastsynthesis.com/news/voltage-control-modifications/
 ## Schematics
 ### Audio In / Out
  * https://www.ericasynths.lv/media/DIY_Output_v2.pdf
