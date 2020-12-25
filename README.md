@@ -12,7 +12,8 @@
  * https://befaco.org/docs/INamp/INamp_V1_4_Schematic.pdf
 ### FV-1
  * http://ozoe.fr/pages/diy/modules_ozoe/multi-effect_fv-1/MULTI_EFFECT_FV-1_SCH.pdf
- * https://www.muffwiggler.com/forum/viewtopic.php?f=17&t=202186&start=150
+ * Dervish: https://www.muffwiggler.com/forum/viewtopic.php?f=17&t=202186&start=150
+ * Timisoara: https://www.muffwiggler.com/forum/viewtopic.php?f=16&t=217032&start=125
 ### Braids DIY
  * http://sound-force.nl/?page_id=3179
  * http://sound-force.nl/wp-content/uploads/2020/07/braids_through-hole_V1.2.pdf
