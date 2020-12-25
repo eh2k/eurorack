@@ -3,6 +3,8 @@
 ## General:
  * http://www.doepfer.de/DIY/a100_diy.htm
  * https://northcoastsynthesis.com/news/voltage-control-modifications/
+ * Powersupply:
+   * http://musicfromouterspace.com/analogsynth_new/WALLWARTSUPPLY/WALLWARTSUPPLY.php
 ## Schematics
 ### Audio In / Out
  * https://www.ericasynths.lv/media/DIY_Output_v2.pdf
