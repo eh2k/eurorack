@@ -7,6 +7,8 @@
  * Powersupply:
    * http://musicfromouterspace.com/analogsynth_new/WALLWARTSUPPLY/WALLWARTSUPPLY.php
 ## Schematics
+### CV-In
+ * https://www.muffwiggler.com/forum/viewtopic.php?p=2066709#2066709
 ### Audio In / Out
  * https://www.ericasynths.lv/media/DIY_Output_v2.pdf
  * https://befaco.org/docs/Out/Output_V3_Schematic.pdf
