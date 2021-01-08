@@ -7,6 +7,7 @@
  * VCF:
    * https://www.skullandcircuits.com/vcf-3/
    * https://northcoastsynthesis.com/products/msk-009-coiler-vcf-sdiy-kit.html
+   * https://www.facebook.com/AnalogOrdnance/posts/through-hole-ripplesnew-run-of-pcbpanels-in-black-coming-soon-limited-20pcs-25us/3449861478403638/
  * Powersupply:
    * http://musicfromouterspace.com/analogsynth_new/WALLWARTSUPPLY/WALLWARTSUPPLY.php
    * https://wired.chillibasket.com/2020/06/dual-power-supply/
