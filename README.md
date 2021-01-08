@@ -10,6 +10,8 @@
  * Powersupply:
    * http://musicfromouterspace.com/analogsynth_new/WALLWARTSUPPLY/WALLWARTSUPPLY.php
    * https://wired.chillibasket.com/2020/06/dual-power-supply/
+## PCB-Panels
+ * https://lookmumnocomputer.discourse.group/t/diy-front-panels-with-pcb/121
 ## Schematics
 ### CV-In
  * https://www.muffwiggler.com/forum/viewtopic.php?p=2066709#2066709
