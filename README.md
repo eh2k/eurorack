@@ -14,6 +14,7 @@
 ## PCB-Panels
  * https://lookmumnocomputer.discourse.group/t/diy-front-panels-with-pcb/121
 ## Schematics
+ * http://www5b.biglobe.ne.jp/~houshu/synth/
 ### CV-In
  * https://www.muffwiggler.com/forum/viewtopic.php?p=2066709#2066709
 ### Audio In / Out
