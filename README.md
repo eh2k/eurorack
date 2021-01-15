@@ -29,6 +29,7 @@
 ### Braids DIY
  * http://sound-force.nl/?page_id=3179
  * http://sound-force.nl/wp-content/uploads/2020/07/braids_through-hole_V1.2.pdf
+ * https://burns.ca/eurorack.html
 ### Ornament & Crime DIY
  * https://github.com/jakplugg/uO_c
  * https://drive.google.com/file/d/0ByUu4ePJDmVnS3U1OUNiQ05heG8/view
