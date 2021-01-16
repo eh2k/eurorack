@@ -44,11 +44,9 @@ WORKDIR /home/eurorack
 RUN git submodule init && git submodule update 
 RUN cd stm_audio_bootloader && git pull origin master && cd ..
 
+#Braids THT 
 COPY dac.h ./braids/drivers/dac.h
 COPY encoder.h ./braids/drivers/encoder.h
 COPY encoder.cc ./braids/drivers/encoder.cc
 
-RUN make -f braids/bootloader/makefile
 ENV PYTHONPATH='.:$PYTHONPATH'
-RUN make -f braids/makefile hex
-RUN cat ./build/braids/braids.hex
