@@ -1,4 +1,4 @@
-### make mi-dev-env docker image
+### build mi-dev-env docker image
 
 ````
 docker build . -t mi-dev-env
