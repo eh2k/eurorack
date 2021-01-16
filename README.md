@@ -1,5 +1,7 @@
 # eurorack
 
+<img src="https://cdn.modulargrid.net/img/racks/modulargrid_1358363.jpg"/>
+
 ## General:
  * http://www.doepfer.de/DIY/a100_diy.htm
  * https://northcoastsynthesis.com/news/voltage-control-modifications/
