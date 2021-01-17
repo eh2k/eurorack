@@ -1,8 +1,5 @@
 # eurorack
 
-
-[![](https://cdn.modulargrid.net/img/racks/modulargrid_1358363.jpg?1)](https://www.modulargrid.net/e/racks/view/1358363)
-
 ## General:
  * http://www.doepfer.de/DIY/a100_diy.htm
  * https://northcoastsynthesis.com/news/voltage-control-modifications/
