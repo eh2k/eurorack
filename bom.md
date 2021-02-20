@@ -90,3 +90,4 @@
 | Knob MXR Style      |                      |     |    1 |      |      |      |
 | Knob Davies         |                      |     |    2 |      |      |      |
 |612-LP4OA1PBCTG      | Switch               |     |      |      |    1 |      |
+|118-2MS1T1B1M2QES    | Switch - ON/ON SubMin|     |      |    3 |      |      |
