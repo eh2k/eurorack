@@ -85,7 +85,7 @@
 |                     |                      |     |      |      |      |      |
 | Thonkikcon Jack     |                      |     |    7 |    7 |   12 |      |
 | Power Header        |                      |     |    1 |    1 |      |      |
-| PIN HEADER          |                      |     |    1 |      |      |      |
+| 649-67996-406HLF    |  PIN HEADER          |     |    1 |      |    2 |      |
 |                     |                      |     |      |      |      |      |
 | Knob MXR Style      |                      |     |    1 |      |      |      |
 | Knob Davies         |                      |     |    2 |      |      |      |
