@@ -4,6 +4,8 @@
  * http://www.doepfer.de/DIY/a100_diy.htm
  * https://northcoastsynthesis.com/news/voltage-control-modifications/
  * [http://lushprojects.com](http://lushprojects.com/circuitjs/circuitjs.html?cct=$+1+0.000005+10.20027730826997+50+5+50%0AR+128+112+64+112+0+1+40+5+0+0+0.5%0Aa+256+128+432+128+0+3.3+-3.3+1000000+-0.00002834693480280813+0%0Ar+128+112+208+112+0+100000%0AR+128+48+96+48+0+0+40+-10+0+0+0.5%0Ar+128+48+208+48+0+200000%0Aw+208+112+256+112+0%0Ar+256+64+432+64+0+33000%0Ac+256+32+432+32+0+4.700000000000001e-9+-2.834721827215616%0Aw+256+112+256+64+0%0Aw+256+64+256+48+0%0Aw+256+48+208+48+0%0Aw+256+48+256+32+0%0Aw+432+32+432+64+0%0Aw+432+64+432+128+0%0Ag+256+144+256+208+0%0Aw+432+128+496+128+0%0Ao+0+64+0+4867+10+0.00009765625+0+2+0+3%0Ao+15+64+0+4355+5+0.00009765625+1+2+15+3%0A)
+ * https://docs.google.com/spreadsheets/d/1KZltEM_g_yhMPhuGk-p82fb1sggsvi72b_s4ztzFu-s/edit#gid=0
+ * https://docs.google.com/spreadsheets/d/1jf6f4dd4qNkuhbMLlKH1jS5D3CNo8qy34iY4rjCN6Fo/edit#gid=0
  * VCF:
    * https://github.com/Cs4System/Eurorack/tree/main/Transistor_Ladder_VCF
    * https://github.com/barnabywalters/Schraeg
