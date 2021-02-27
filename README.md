@@ -41,3 +41,4 @@
  * LM13700
    * https://www.uk-electronic.de/onlineshop/product_info.php?products_id=707
    * https://electricdruid.net/design-a-eurorack-vintage-vca-with-the-lm13700/
+   * https://ecolabaudio.wordpress.com/2021/02/09/dual-vca-for-eurorack-diy-assembled/
