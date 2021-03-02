@@ -55,7 +55,7 @@
 |815-ABLS2-20-D4Y-T   | 20Mhz                |     |      |      |    1 |      |
 |863-MMBT3904LT1G     | NPN-Transistor SOT-23|     |      |      |    2 |      |
 |                     |                      |     |      |      |      |      |
-|511-TL074CDT         | TL074 - SO-14        |     |    3 |    4 |      |      |
+|511-TL074CDT         | TL074 - SO-14        |  15 |    3 |    4 |      |      |
 |579-MCP6002-I/SN     | MCP6002 - SO-8       |     |      |      |    3 |      |
 |595-CD74HC595M       | 74HC595D - SO-16     |     |      |      |    1 |      |
 |595-LM2902KVQDRQ1    | LM2902 - SO-14       |     |    1 |      |      |      |
@@ -71,23 +71,24 @@
 |604-WP3A8ID          | LED 3mm - RED        |     |    5 |      |      |      |
 |604-WP424GDT         | LED 3mm - GREEN      |     |      |      |    3 |      |
 |                     |                      |     |      |      |      |      |
+|xx                   | Trimmer - 200K       |   1 |      |      |      |      |
 |81-PV36W254C01B00    | Trimmer - 250K       |     |      |    1 |      |      |
 |81-PV36W104C01B00    | Trimmer - 100K       |     |    1 |    1 |      |      |
-|81-PV36W103C01B00    | Trimmer - 10K        |     |    2 |      |      |      |
-|72-T93YB-5K          | Trimmer - 5K         |     |    1 |      |      |      |
-|72-T93YB-1K          | Trimmer - 1K         |     |    1 |      |      |      |
+|81-PV36W103C01B00    | Trimmer - 10K        |   2 |    2 |      |      |      |
+|72-T93YB-5K          | Trimmer - 5K         |   1 |    1 |      |      |      |
+|72-T93YB-1K          | Trimmer - 1K         |   1 |    1 |      |      |      |
 |                     |                      |     |      |      |      |      |
 | Song Huei B100K     |                      |     |    2 |    3 |      |      |
 | Song Huei A100K     |                      |     |    2 |      |      |      |
-| Song Huei B10K      |                      |     |    1 |      |    7 |      |
-| Alps RK09 B100K     |                      |     |    2 |    2 |      |      |
-| Alps RK09 B10K      |                      |     |    1 |      |      |      |
+| Song Huei B10K      |                      |  10 |    1 |      |    7 |      |
+| Alps RK09 B100K     |                      |  12 |    2 |    2 |      |      |
+| Alps RK09 B10K      |                      |  12 |    1 |      |      |      |
 |                     |                      |     |      |      |      |      |
-| Thonkikcon Jack     |                      |     |    7 |    7 |   12 |      |
-| Power Header        |                      |     |    1 |    1 |      |      |
-| 649-67996-406HLF    |  PIN HEADER          |     |    1 |      |    2 |      |
+| Thonkikcon Jack     |                      |  25 |    7 |    7 |   12 |      |
+| Power Header        |                      |   x |    1 |    1 |      |      |
+| 649-67996-406HLF    |  PIN HEADER          |   x |    1 |      |    2 |      |
 |                     |                      |     |      |      |      |      |
-| Knob MXR Style      |                      |     |    1 |      |      |      |
-| Knob Davies         |                      |     |    2 |      |      |      |
+| Knob MXR Style      |                      |   2 |    1 |      |      |      |
+| Knob Davies         |                      |   4 |    2 |      |      |      |
 |612-LP4OA1PBCTG      | Switch               |     |      |      |    1 |      |
 |118-2MS1T1B1M2QES    | Switch - ON/ON SubMin|     |      |    3 |      |      |
