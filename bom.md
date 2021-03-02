@@ -73,9 +73,9 @@
 |                     |                      |     |      |      |      |      |
 |xx                   | Trimmer - 200K       |   1 |      |      |      |      |
 |81-PV36W254C01B00    | Trimmer - 250K       |     |      |    1 |      |      |
-|81-PV36W104C01B00    | Trimmer - 100K       |     |    1 |    1 |      |      |
-|81-PV36W103C01B00    | Trimmer - 10K        |   2 |    2 |      |      |      |
-|72-T93YB-5K          | Trimmer - 5K         |   1 |    1 |      |      |      |
+|81-PV36W104C01B00    | Trimmer - 100K       |     |    2 |    1 |      |      |
+|81-PV36W103C01B00    | Trimmer - 10K        |   2 |    1 |      |      |      |
+|72-T93YB-5K          | Trimmer - 5K         |   1 |      |    1 |      |      |
 |72-T93YB-1K          | Trimmer - 1K         |   1 |    1 |      |      |      |
 |                     |                      |     |      |      |      |      |
 | Song Huei B100K     |                      |     |    2 |    3 |      |      |
