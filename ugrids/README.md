@@ -1,0 +1,7 @@
+### Arduino ISP:
+
+* https://crycode.de/arduino-als-isp-programmer
+
+```
+sudo avrdude -c stk500v1 -b 19200 -P /dev/ttyUSB0 -p m328p -U flash:w:grids.hex -U lfuse:w:0xff:m -U hfuse:w:0xd8:m -U efuse:w:0xff:m -U lock:w:0x2F:m
+```
