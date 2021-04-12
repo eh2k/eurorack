@@ -285,58 +285,6 @@ void MidiStreamParser<Device>::MessageReceived(uint8_t status) {
   }
 }
 
-struct LowPriorityBufferSpecs
-{
-    enum
-    {
-        buffer_size = 128,
-        data_size = 8,
-    };
-    typedef avrlib::DataTypeForSize<data_size>::Type Value;
-};
-
-struct HighPriorityBufferSpecs
-{
-    enum
-    {
-        buffer_size = 16,
-        data_size = 8,
-    };
-    typedef avrlib::DataTypeForSize<data_size>::Type Value;
-};
-
-class MidiDispatcher : public midi::MidiDevice
-{
-public:
-    typedef avrlib::RingBuffer<LowPriorityBufferSpecs> OutputBufferLowPriority;
-    typedef avrlib::RingBuffer<HighPriorityBufferSpecs> OutputBufferHighPriority;
-
-    static uint8_t readable_high_priority()
-    {
-        return OutputBufferHighPriority::readable();
-    }
-
-    static uint8_t readable_low_priority()
-    {
-        return OutputBufferLowPriority::readable();
-    }
-
-    static uint8_t ImmediateReadHighPriority()
-    {
-        return OutputBufferHighPriority::ImmediateRead();
-    }
-
-    static uint8_t ImmediateReadLowPriority()
-    {
-        return OutputBufferLowPriority::ImmediateRead();
-    }
-
-    MidiDispatcher() {}
-
-    static void NoteOn(uint8_t channel, uint8_t note, uint8_t velocity);
-    static void NoteOff(uint8_t channel, uint8_t note, uint8_t velocity);
-};
-
 }  // namespace midi
 
 #endif // MIDI_MIDI_H_

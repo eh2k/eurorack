@@ -23,7 +23,7 @@
 #include "grids/clock.h"
 #include "grids/hardware_config.h"
 #include "grids/pattern_generator.h"
-#include "grids/midi.h"
+#include "grids/midi_dispatcher.h"
 
 using namespace avrlib;
 using namespace grids;
@@ -33,8 +33,6 @@ Inputs inputs;
 AdcInputScanner adc;
 ShiftRegister shift_register;
 MidiInput midiInput;
-RingBuffer<SerialInput<SerialPort0> > midi_buffer;
-midi::MidiStreamParser<midi::MidiDispatcher> midi_dispatcher;
 
 enum Parameter {
   PARAMETER_NONE,
@@ -57,51 +55,6 @@ int8_t swing_amount;
 volatile Parameter parameter = PARAMETER_NONE;
 volatile bool long_press_detected = false;
 const uint8_t kUpdatePeriod = F_CPU / 32 / 8000;
-
-uint8_t midi_state = 0;
-uint8_t state_mask = 0b11111111;
-
-
-void midi::MidiDispatcher::NoteOn(uint8_t channel, uint8_t note, uint8_t velocity){
-
-  state_mask = 0b00111111;
-  const uint8_t GM_RESET = 12;  //C0
-
-  uint8_t& state = midi_state;
-
-  if(note == GM_RESET) {
-    pattern_generator.Reset();
-    pattern_generator.TickClock(1);
-    return;
-  }
-
-  if(velocity > 0 && velocity <= 127)
-  {
-    bool won = (Random::GetByte() / 2) < velocity;
-    if (note == (GM_RESET + 2))
-      won ? state |= 1 : state |= 8;
-    else if (note == (GM_RESET + 4))
-      won ? state |= 2 : state |= 16;
-    else if (note == (GM_RESET + 5))
-      won ? state |= 4 : state |= 32;
-    else if (note == (GM_RESET + 7))
-      won ? state |= 64 : state |= 128;
-  }
-  else
-  {
-    if (note == (GM_RESET + 2))
-      state &= ~(1|8);
-    else if ( note == (GM_RESET + 4))
-       state &= ~(2|16);
-    else if (note == (GM_RESET + 5))
-      state &= ~(4|32);
-    else if (note == (GM_RESET + 7))
-      state &= ~(64|128);
-  }
-}
-void midi::MidiDispatcher::NoteOff(uint8_t channel, uint8_t note, uint8_t velocity){
-  midi::MidiDispatcher::NoteOn(channel, note, 0);
-}
 
 inline void UpdateLeds() {
   uint8_t pattern;
@@ -191,50 +144,100 @@ inline void UpdateShiftRegister() {
   }
 }
 
-uint8_t ticks_granularity[] = { 6, 3, 1 };
-
 inline void HandleClockResetInputs() {
   static uint8_t previous_inputs;
   
+  const uint8_t ticks_granularity[] = { 6, 3, 1 };
   uint8_t inputs_value = ~inputs.Read();
   uint8_t num_ticks = 0;
   uint8_t increment = ticks_granularity[pattern_generator.clock_resolution()];
 
+  static uint16_t tick = 0;
+  static uint16_t last_tick = 0;
+  static uint16_t next_trigger = 0;
   static uint8_t midi_playing = 0;
+  static uint8_t midi_clock = 0;
+  static uint8_t midi_ticks = 0;
+
+  static uint8_t midi_inc = ticks_granularity[CLOCK_RESOLUTION_4_PPQN];
+
+  if(midi_clock && midi_ticks == 0) {
+    if(midi_shuffle < 5)
+      midi_inc = ticks_granularity[CLOCK_RESOLUTION_24_PPQN];
+    else
+      midi_inc = ticks_granularity[CLOCK_RESOLUTION_4_PPQN];
+  }
   
-  // CLOCK
-  if (clock.bpm() < 40 && !clock.locked()) {
-    if ((inputs_value & INPUT_CLOCK) && !(previous_inputs & INPUT_CLOCK)) {
-      num_ticks = increment;
-    }
-    if (!(inputs_value & INPUT_CLOCK) && (previous_inputs & INPUT_CLOCK)) {
-      pattern_generator.ClockFallingEdge();
-    }
-    if (midiInput.readable()) {
-          
-      uint8_t byte = midiInput.ImmediateRead();
-      if (byte == 0xf8 && midi_playing) {
-        num_ticks = 1;
-      } else if (byte == 0xfa) { //Start
-        pattern_generator.Reset();
-        midi_playing = 1;
-      } else if (byte == 0xfc) { //Stop
-        midi_playing = 0;
-      } else if (byte == 0xfb) { //Continue
-        midi_playing = 1;
-      }
+  if (midiInput.readable()) {
+
+    uint8_t byte = midiInput.ImmediateRead();
+    if (byte == 0xf8) {
+      midi_clock = 255;
       
-      midi_buffer.NonBlockingWrite(byte);
+      if (midi_ticks <= (midi_shuffle / 10))
+        midi_pattern |= LED_CLOCK;
+      else
+        midi_pattern &= ~LED_CLOCK;
+
+      if(midi_inc == 1){
+        next_trigger = tick; //force 1/32 resolution
+      } else {
+        if(midi_ticks % 6 == 0) {        
+          next_trigger = tick;
+          
+          if(midi_ticks == 6 || midi_ticks == 18)
+            next_trigger = tick + ((tick - last_tick) / 256 * midi_shuffle);
+        }
+      }
+
+      if(midi_ticks % 6 == 0)
+        last_tick = tick;
+
+      midi_ticks = ++midi_ticks % 24;
+    } else if (byte == 0xfa) { //Start
+      midi_ticks = 0;
+      pattern_generator.Reset();
+      midi_playing = 1;
+    } else if (byte == 0xfc) { //Stop
+      midi_playing = 0;
+      midi_pattern &= ~LED_CLOCK;
+    } else if (byte == 0xfb) { //Continue
+      midi_playing = 1;
+      midi_ticks = 0;
+    }
+
+    midi_buffer.NonBlockingWrite(byte);
+  }
+
+  if (next_trigger == tick++)
+    num_ticks = midi_playing ? midi_inc : 0;
+  else if (next_trigger + 2 == tick && midi_clock)
+     pattern_generator.ClockFallingEdge();
+
+  if (midi_clock == 0) {
+    midi_playing = 0;
+    midi_pattern &= ~LED_CLOCK;
+    // CLOCK
+    if (clock.bpm() < 40 && !clock.locked()) {
+      if ((inputs_value & INPUT_CLOCK) && !(previous_inputs & INPUT_CLOCK)) {
+        num_ticks = increment;
+      }
+      if (!(inputs_value & INPUT_CLOCK) && (previous_inputs & INPUT_CLOCK)) {
+        pattern_generator.ClockFallingEdge();
+      }
+    }
+    else {
+      clock.Tick();
+      clock.Wrap(swing_amount);
+      if (clock.raising_edge()) {
+        num_ticks = increment;
+      }
+      if (clock.past_falling_edge()) {
+        pattern_generator.ClockFallingEdge();
+      }
     }
   } else {
-    clock.Tick();
-    clock.Wrap(swing_amount);
-    if (clock.raising_edge()) {
-      num_ticks = increment;
-    }
-    if (clock.past_falling_edge()) {
-      pattern_generator.ClockFallingEdge();
-    }
+    --midi_clock;
   }
 
   // RESET
@@ -261,7 +264,7 @@ inline void HandleClockResetInputs() {
     }
   }
   previous_inputs = inputs_value;
-  
+
   if (num_ticks) {
     swing_amount = pattern_generator.swing_amount();
     pattern_generator.TickClock(num_ticks);
@@ -351,7 +354,7 @@ void ScanPots() {
   }
   
   if (parameter == PARAMETER_NONE) {
-    uint8_t bpm = adc.Read8(ADC_CHANNEL_TEMPO);
+    uint8_t bpm = midi_shuffle = adc.Read8(ADC_CHANNEL_TEMPO);
     bpm = U8U8MulShift8(bpm, 220) + 20;
     if (bpm != clock.bpm() && !clock.locked()) {
       clock.Update(bpm, pattern_generator.clock_resolution());
