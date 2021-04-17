@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+// 2021-04-17 @eh2x: Midi-Input Clock/Control implementation
+
 #include <avr/eeprom.h>
 
 #include "avrlib/adc.h"
@@ -23,7 +25,6 @@
 #include "grids/clock.h"
 #include "grids/hardware_config.h"
 #include "grids/pattern_generator.h"
-#include "grids/midi_dispatcher.h"
 
 using namespace avrlib;
 using namespace grids;
@@ -32,7 +33,7 @@ Leds leds;
 Inputs inputs;
 AdcInputScanner adc;
 ShiftRegister shift_register;
-MidiInput midiInput;
+MidiInput midi;
 
 enum Parameter {
   PARAMETER_NONE,
@@ -46,8 +47,7 @@ enum Parameter {
 };
 
 uint32_t tap_duration = 0;
-uint8_t led_pattern = 0;
-uint8_t midi_pattern = 0;
+uint8_t led_pattern ;
 uint8_t led_off_timer;
 
 int8_t swing_amount;
@@ -65,7 +65,7 @@ inline void UpdateLeds() {
         led_pattern = 0;
       }
     }
-    pattern = led_pattern | midi_pattern;
+    pattern = led_pattern;
     if (pattern_generator.tap_tempo()) {
       if (pattern_generator.on_beat()) {
         pattern |= LED_CLOCK;
@@ -117,28 +117,15 @@ inline void UpdateLeds() {
 
 inline void UpdateShiftRegister() {
   static uint8_t previous_state = 0;
-  uint8_t state = (pattern_generator.state() & state_mask) | midi_state;
-  if (state != previous_state) {
-    previous_state = state;
+  if (pattern_generator.state() != previous_state) {
+    previous_state = pattern_generator.state();
     shift_register.Write(previous_state);
     if (!previous_state) {
       // Switch off the LEDs, but not now.
       led_off_timer = 200;
     } else {
       // Switch on the LEDs with a new pattern.
-      //led_pattern = pattern_generator.led_pattern();
-      
-      led_pattern = 0;
-      if (state & 1) {
-        led_pattern |= LED_BD;
-      }
-      if (state & 2) {
-        led_pattern |= LED_SD;
-      }
-      if (state & 4) {
-        led_pattern |= LED_HH;
-      }
-      
+      led_pattern = pattern_generator.led_pattern();
       led_off_timer = 0;
     }
   }
@@ -156,10 +143,11 @@ inline void HandleClockResetInputs() {
   static uint16_t last_tick = 0;
   static uint16_t next_trigger = 0;
   static uint8_t midi_playing = 0;
-  static uint8_t midi_clock = 0;
+  static uint16_t midi_clock = 0;
   static uint8_t midi_ticks = 0;
 
   static uint8_t midi_inc = ticks_granularity[CLOCK_RESOLUTION_4_PPQN];
+  uint8_t midi_shuffle = adc.Read8(ADC_CHANNEL_TEMPO);
 
   if(midi_clock && midi_ticks == 0) {
     if(midi_shuffle < 5)
@@ -168,16 +156,16 @@ inline void HandleClockResetInputs() {
       midi_inc = ticks_granularity[CLOCK_RESOLUTION_4_PPQN];
   }
   
-  if (midiInput.readable()) {
+  if (midi.readable()) {
 
-    uint8_t byte = midiInput.ImmediateRead();
+    uint8_t byte = midi.ImmediateRead();
     if (byte == 0xf8) {
-      midi_clock = 255;
+      midi_clock = 1024;
       
       if (midi_ticks <= (midi_shuffle / 10))
-        midi_pattern |= LED_CLOCK;
+        led_pattern |= LED_CLOCK;
       else
-        midi_pattern &= ~LED_CLOCK;
+        led_pattern &= ~LED_CLOCK;
 
       if(midi_inc == 1){
         next_trigger = tick; //force 1/32 resolution
@@ -200,13 +188,11 @@ inline void HandleClockResetInputs() {
       midi_playing = 1;
     } else if (byte == 0xfc) { //Stop
       midi_playing = 0;
-      midi_pattern &= ~LED_CLOCK;
+      led_pattern &= ~LED_CLOCK;
     } else if (byte == 0xfb) { //Continue
       midi_playing = 1;
       midi_ticks = 0;
     }
-
-    midi_buffer.NonBlockingWrite(byte);
   }
 
   if (next_trigger == tick++)
@@ -216,7 +202,6 @@ inline void HandleClockResetInputs() {
 
   if (midi_clock == 0) {
     midi_playing = 0;
-    midi_pattern &= ~LED_CLOCK;
     // CLOCK
     if (clock.bpm() < 40 && !clock.locked()) {
       if ((inputs_value & INPUT_CLOCK) && !(previous_inputs & INPUT_CLOCK)) {
@@ -354,7 +339,7 @@ void ScanPots() {
   }
   
   if (parameter == PARAMETER_NONE) {
-    uint8_t bpm = midi_shuffle = adc.Read8(ADC_CHANNEL_TEMPO);
+    uint8_t bpm = adc.Read8(ADC_CHANNEL_TEMPO);
     bpm = U8U8MulShift8(bpm, 220) + 20;
     if (bpm != clock.bpm() && !clock.locked()) {
       clock.Update(bpm, pattern_generator.clock_resolution());
@@ -431,7 +416,7 @@ void Init() {
   Adc::set_alignment(ADC_LEFT_ALIGNED);
   pattern_generator.Init();
   shift_register.Init();
-  midiInput.Init();
+  midi.Init();
   
   TCCR2A = _BV(WGM21);
   TCCR2B = 3;
@@ -446,9 +431,5 @@ int main(void) {
   while (1) {
     // Use any spare cycles to read the CVs and update the potentiometers
     ScanPots();
-
-    while (midi_buffer.readable()) { 
-      midi_dispatcher.PushByte(midi_buffer.ImmediateRead());
-    }
   }
 }

@@ -13,11 +13,7 @@ sudo avrdude -c stk500v1 -b 19200 -P /dev/ttyUSB0 -p m328p -U lfuse:w:0xff:m -U 
 sudo avrdude -c stk500v1 -b 19200 -P /dev/ttyUSB0 -p m328p -U flash:w:./builds/grids/grids.hex
 ```
 
-### Midi-Input Implementation
- * Start, Stop, Continue
- * C0 (12) -> Reset Pattern
- * Midi-Probability-Trigger ( Velocity < Random )
-    * D0 (14) = BD or BD-Acc
-    * E0 (16) = SD or SD-Acc
-    * F0 (17) = HH or HH-Acc
-    * G0 (19) = JP1-A or JP1-B
+### Midi-Input Clock/Control Implementation
+ * Internal Clock is deaktivated, when Midi-Input steam readable
+ * Midi-Control: Start, Stop, Continue
+ * Clock-Pot: Swing
