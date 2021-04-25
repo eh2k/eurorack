@@ -20,6 +20,8 @@
  * https://lookmumnocomputer.discourse.group/t/diy-front-panels-with-pcb/121
 ## Schematics
  * http://www5b.biglobe.ne.jp/~houshu/synth/
+### Teensy
+ * https://github.com/otem/Eurorack/raw/master/TeensyDrumV2/design/Schematic_TeensyDrumsV2.pdf
 ### CV-In
  * https://www.muffwiggler.com/forum/viewtopic.php?p=2066709#2066709
 ### Audio In / Out
