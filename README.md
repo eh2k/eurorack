@@ -33,8 +33,9 @@
  * https://www.diystompboxes.com/smfforum/index.php?topic=124759.0
  * Dervish: https://www.muffwiggler.com/forum/viewtopic.php?f=17&t=202186&start=150
  * Timisoara: https://www.muffwiggler.com/forum/viewtopic.php?f=16&t=217032&start=125
-### Arduino 
+### DIY
  * https://note.com/solder_state/n/nde97a0516f03
+ * http://neutron-sound.com/noa.html
 ### Braids DIY
  * http://sound-force.nl/?page_id=3179
  * http://sound-force.nl/wp-content/uploads/2020/07/braids_through-hole_V1.2.pdf
